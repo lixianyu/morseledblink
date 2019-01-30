@@ -54,8 +54,11 @@ char *MORSE[] = { ".-", "-...", "-.-.", "-..", ".", // a, b, c, d, e
 
 int gALPHALen;
 int gStringLen;
-char gLedShowString[] = "happy new year 2019!";
-//char gLedShowString[] = "hb sos";
+//char gLedShowString[] = "happy new year 2019!";
+//char gLedShowString[] = "abcde";
+//char gLedShowString[] = "abcdefghijklmnopqrstuvwxyz happy new year 2019!";
+char gLedShowString[] = "a b c d e f g h i j k l m n o p q r s t u v w x y z";
+//char gLedShowString[] = "xyz";
 
 void setup() {
 //  Serial.begin(115200);
@@ -75,13 +78,20 @@ void loop() {
 //  Serial.print("gLedIdx = ");
 //  Serial.println(gLedIdx);
   gMorseIdx = -1;
-  for (int i = 0; i < gALPHALen; i++) {
-    if (ALPHA[i] == gLedShowString[gLedIdx]) {
-      gMorseIdx = i;
-      break;
+  if (gLedShowString[gLedIdx] != ' ') {
+    if (gLedShowString[gLedIdx] >= 'a' && gLedShowString[gLedIdx] <= 'z') {
+      gMorseIdx = gLedShowString[gLedIdx] - 'a';
+      goto DO_WORK;
+    }
+    for (int i = 0; i < gALPHALen; i++) {
+      if (ALPHA[i] == gLedShowString[gLedIdx]) {
+        gMorseIdx = i;
+        break;
+      }
     }
   }
-  
+
+DO_WORK:
 //  Serial.print("gMorseIdx = ");
 //  Serial.println(gMorseIdx);
   if (gMorseIdx == -1) { // We find ' ' --- blank
